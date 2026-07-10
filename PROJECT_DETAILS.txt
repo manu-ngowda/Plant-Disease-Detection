@@ -1,0 +1,115 @@
+Project: Plant Disease Detection
+
+Summary
+-------
+This project is a Flask web application that runs a pretrained PyTorch convolutional neural network (CNN) to classify plant leaf images into disease categories. It includes a web UI for uploading images, a results page with disease description and prevention steps, and a supplements/market page that recommends products. The goal is to provide a lightweight demonstration of plant disease detection and an educational platform to experiment with model inference and simple web deployment.
+
+Primary components
+------------------
+- Flask backend: `Flask Deployed App/app.py` — routes, model loading, prediction pipeline, static serving.
+- PyTorch model code: `Flask Deployed App/CNN.py` — model class definition used to create/load the pretrained model.
+- Pretrained model: `plant_disease_model_1_latest.pt` (expected at repository root). This file contains model weights for a CNN trained to predict 39 classes.
+- Templates: `Flask Deployed App/templates/` — Jinja2 HTML templates for pages (home, index, submit/results, market, contact). Several image assets are stored here.
+- Static assets: `Flask Deployed App/static/` — CSS (`css/style.css`) and other static files. The app uses Bootstrap + a custom stylesheet.
+- Notebooks: `Model/` — training notebooks and documentation used when preparing the model.
+- Test images: `test_images/` — sample images for quick verification.
+
+High-level architecture
+-----------------------
+1. Web UI (browser) uploads an image to the Flask endpoint `/submit` (multipart/form-data).
+2. Flask saves the image in `static/uploads/` and calls `prediction(image_path)`.
+3. `prediction()` loads the image, resizes to 224x224, converts to tensor, and runs a forward pass on the loaded model (CPU mode by default).
+4. The index of the highest logit is selected; metadata (disease name, description, prevention steps, supplement recommendation) is looked up in CSV files (`disease_info.csv`, `supplement_info.csv`) and rendered in the `submit.html` template.
+5. The app provides a small route `/images/<filename>` to expose image files kept in the templates folder.
+
+Dataset and model
+-----------------
+- Training dataset: Likely based on the PlantVillage dataset (publicly available dataset containing many labeled leaf images). The repository mentions training on PlantVillage.
+- Model architecture: Custom CNN defined in `CNN.py` with final output size 39 (39 classes). Exact layer details are in that file.
+- Pretrained weights: `plant_disease_model_1_latest.pt` — include this file when deploying or testing.
+- Inference: The app loads weights with `torch.load(..., map_location='cpu')` and uses the model in eval mode.
+
+Training notes (what to include in a report)
+---------------------------------------------
+If you generate a training section for a college report, include:
+- Dataset description and class balance
+- Preprocessing: resize to 224x224, normalization (mean/std) used, augmentation strategies (if any)
+- Model architecture: layers, activation functions, dropout, batch normalization
+- Training hyperparameters: optimizer (SGD/Adam), learning rate schedule, batch size, epochs, loss function
+- Validation strategy: train/val split, early stopping, metrics used (accuracy, precision, recall, F1)
+- Hardware used and approximate training time
+- Example training and validation curves and confusion matrix
+
+How to run locally
+------------------
+1. Create virtual environment and activate:
+   - Windows PowerShell:
+     ```powershell
+     python -m venv venv
+     .\venv\Scripts\Activate.ps1
+     ```
+2. Install dependencies:
+   ```powershell
+   pip install -r "Flask Deployed App\requirements.txt"
+   ```
+3. Ensure the pretrained model file `plant_disease_model_1_latest.pt` is placed at the repository root (one level above `Flask Deployed App`).
+4. Start the app from the `Flask Deployed App` directory:
+   ```powershell
+   cd "Flask Deployed App"
+   python app.py
+   ```
+5. Open `http://127.0.0.1:5000/` in a browser.
+
+Files of interest (paths relative to repo root)
+----------------------------------------------
+- Flask Deployed App/app.py
+- Flask Deployed App/CNN.py
+- Flask Deployed App/requirements.txt
+- Flask Deployed App/templates/base.html
+- Flask Deployed App/templates/home.html
+- Flask Deployed App/templates/index.html
+- Flask Deployed App/templates/submit.html
+- Flask Deployed App/templates/market.html
+- Flask Deployed App/templates/contact-us.html
+- Flask Deployed App/static/css/style.css
+- disease_info.csv (under Flask Deployed App)
+- supplement_info.csv (under Flask Deployed App)
+- Model/ (training notebooks and documentation)
+- test_images/ (sample images)
+
+Troubleshooting & known issues
+-----------------------------
+- CSS not loading: confirm `http://127.0.0.1:5000/static/css/style.css` returns 200. Clear browser cache if changes don’t show.
+- Model file missing: app will fail to load model — make sure `plant_disease_model_1_latest.pt` exists at repo root and name matches expectation.
+- PyTorch/NumPy compatibility: on Windows and modern Python versions, prefer recent wheels for `torch` and `numpy` (requirements were updated to compatible versions).
+- Image assets: some images are stored in the `templates` directory and served via `/images/<filename>` route — for production these should be moved to `static/images/` and `app.py` adjusted accordingly.
+
+Evaluation and metrics (recommended additions)
+----------------------------------------------
+- Report classification accuracy per-class and macro/micro averaged precision, recall, F1.
+- Display a confusion matrix and top-5 accuracy if classes are numerous.
+- If available, show sample correct/incorrect predictions and discuss failure modes (ambiguous images, occlusion, varied lighting).
+
+Limitations & future work
+-------------------------
+- Limited model explainability: add Grad-CAM or other visualization to show which parts of the leaf influenced decisions.
+- Class imbalance: consider rebalancing strategies or focal loss if dataset is imbalanced.
+- Mobile support: convert model to ONNX or TensorFlow Lite for on-device inference.
+- Robustness: add more data augmentation and include more varied field images (different backgrounds, lighting, partial leaves).
+- Move example template images into `static/images/` and serve via standard static routing.
+
+Material to provide to Claude
+----------------------------
+For a college-level report, include these items in the prompt to Claude along with this file:
+- This PROJECT_DETAILS.txt (this file)
+- Training notebooks from `Model/` (if you want training methodology in the report)
+- A small dataset sample or example predictions (images from `test_images/` and model outputs)
+- Any evaluation results (accuracy numbers, confusion matrices, loss/accuracy curves)
+
+Contact and attribution
+-----------------------
+- Project owner: repository author (see repo metadata).
+- Use this project for educational purposes; review dataset license (PlantVillage) and third-party package licenses before redistribution.
+
+---
+Generated: 2026-07-10

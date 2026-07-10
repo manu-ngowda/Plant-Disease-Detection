@@ -1,0 +1,132 @@
+:root {
+    --primary: #1d4d2e;
+    --secondary: #68a75f;
+    --surface: #ffffff;
+    --surface-dark: #eff5ed;
+    --text: #102410;
+    --muted: #5d6d5a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+    background: radial-gradient(circle at top left, #eff8f0 0%, #f8fbf7 40%, #ffffff 100%);
+}
+
+.navbar {
+    padding: 1rem 2rem;
+    background: var(--primary);
+}
+
+.navbar-brand,
+.nav-link {
+    color: #f6f8f4 !important;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: #e0f2d4 !important;
+}
+
+.hero {
+    padding: 5rem 0 3rem;
+}
+
+.hero .badge {
+    background: rgba(104, 167, 95, 0.16);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1.05;
+}
+
+.hero p {
+    color: #49594f;
+    font-size: 1.05rem;
+}
+
+.btn-primary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+    color: #102410;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #4f8b4a;
+    border-color: #4f8b4a;
+}
+
+.card-glass {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(22, 65, 30, 0.08);
+    border-radius: 1.25rem;
+    box-shadow: 0 28px 70px rgba(20, 47, 28, 0.08);
+}
+
+.feature-card {
+    border: none;
+}
+
+.section-title {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.plant-list .card {
+    min-height: 100%;
+}
+
+.plant-list img {
+    object-fit: cover;
+    min-height: 220px;
+    border-radius: 1rem;
+}
+
+.form-control,
+.form-control:focus {
+    border-radius: 1rem;
+    border-color: rgba(104, 167, 95, 0.35);
+    box-shadow: none;
+}
+
+.footer-basic {
+    padding: 2.5rem 0;
+    background: #102410;
+    color: #dbe6d7;
+}
+
+.footer-basic a {
+    color: #dbe6d7;
+    text-decoration: none;
+}
+
+.footer-basic a:hover {
+    color: #ffffff;
+}
+
+.footer-basic .social a {
+    color: #dbe6d7;
+    margin: 0 0.5rem;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 992px) {
+    .hero {
+        padding-top: 3rem;
+    }
+}

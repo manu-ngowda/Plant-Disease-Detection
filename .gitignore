@@ -1,0 +1,49 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+*/venv/
+env/
+.env
+
+# PyTorch model files (don't commit large model weights)
+plant_disease_model_1_latest.pt
+*.pt
+
+# Flask uploaded files and runtime artifacts
+Flask Deployed App/static/uploads/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE / editor
+.vscode/
+.idea/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Test and coverage
+.pytest_cache/
+.coverage
+
+# Misc
+coverage.xml
+instance/

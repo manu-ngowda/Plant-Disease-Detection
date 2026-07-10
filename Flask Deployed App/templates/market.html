@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block pagetitle %}Supplement Market{% endblock pagetitle %}
+
+{% block body %}
+<section class="container py-5">
+    <div class="text-center mb-5">
+        <span class="badge mb-2">Supplements</span>
+        <h1 class="display-6 fw-bold">Browse recommended plant supplements</h1>
+        <p class="text-muted">Find the right product for each disease and plant type.</p>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        {% for index in range(0, supplement_name | length) %}
+        {% if index != 4 %}
+        <div class="col">
+            <div class="card card-glass h-100 border-0 shadow-sm">
+                <img src="{{ supplement_image[index] }}" class="card-img-top rounded-4" alt="{{ supplement_name[index] }}">
+                <div class="card-body">
+                    <p class="text-secondary mb-1">For {{ disease[index] }}</p>
+                    <h5 class="card-title">{{ supplement_name[index] }}</h5>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-center mb-3">
+                    <a target="_blank" href="{{ buy[index] }}" class="btn btn-primary">Buy product</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock body %}
